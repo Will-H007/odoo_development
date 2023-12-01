@@ -31,4 +31,8 @@
         <field name="sequence">400</field>
     </record>
 
+    <record id="spreadsheet_dashboard_group_logistics" model="spreadsheet.dashboard.group">
+        <field name="name">Testing</field>
+        <field name="sequence">400</field>
+    </record>
 </odoo>
