@@ -48,8 +48,10 @@ class FleetVehicle(models.Model):
     trailer_hook = fields.Boolean(default=False, string='Trailer Hitch', compute='_compute_model_fields', store=True, readonly=False)
     driver_id = fields.Many2one('res.partner', 'Driver', tracking=True, help='Driver address of the vehicle', copy=False)
     future_driver_id = fields.Many2one('res.partner', 'Future Driver', tracking=True, help='Next Driver Address of the vehicle', copy=False, check_company=True)
+    # model_id = fields.Many2one('fleet.vehicle.model', 'Model',
+    #     tracking=True, required=True)
     model_id = fields.Many2one('fleet.vehicle.model', 'Model',
-        tracking=True, required=True)
+    tracking=True, required=False)
 
     brand_id = fields.Many2one('fleet.vehicle.model.brand', 'Brand', related="model_id.brand_id", store=True, readonly=False)
     log_drivers = fields.One2many('fleet.vehicle.assignation.log', 'vehicle_id', string='Assignment Logs')
@@ -77,10 +79,14 @@ class FleetVehicle(models.Model):
     tag_ids = fields.Many2many('fleet.vehicle.tag', 'fleet_vehicle_vehicle_tag_rel', 'vehicle_tag_id', 'tag_id', 'Tags', copy=False)
     odometer = fields.Float(compute='_get_odometer', inverse='_set_odometer', string='Last Odometer',
         help='Odometer measure of the vehicle at the moment of this log')
+    # odometer_unit = fields.Selection([
+    #     ('kilometers', 'km'),
+    #     ('miles', 'mi')
+    #     ], 'Odometer Unit', default='kilometers', required=True)
     odometer_unit = fields.Selection([
         ('kilometers', 'km'),
         ('miles', 'mi')
-        ], 'Odometer Unit', default='kilometers', required=True)
+        ], 'Odometer Unit', default='kilometers', required=False)
     transmission = fields.Selection(
         [('manual', 'Manual'), ('automatic', 'Automatic')], 'Transmission',
         compute='_compute_model_fields', store=True, readonly=False)
